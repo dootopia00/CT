@@ -27,7 +27,20 @@
 
 */
 
-
+let position = {
+    "1":[0,0],
+    "2":[0,1],
+    "3":[0,2],
+    "4":[1,0],
+    "5":[1,1],
+    "6":[1,2],
+    "7":[2,0],
+    "8":[2,1],
+    "9":[2,2],
+    "*":[3,0],
+    "0":[3,1],
+    "#":[3,2],
+  };
 
 const action = function(numbers, hand){
 
@@ -77,8 +90,6 @@ const action = function(numbers, hand){
 const calculation = function(currentLeft, currentRight, inputNum, hand){
 
     // 눌러야할 값이랑 손가락 위치값이랑 비교해서 차이가 덜 나는 곳으로 클릭
-    let left =  0;
-    let right = 0;
     let value = 0;
     let data = {
         answer: value,
@@ -86,66 +97,52 @@ const calculation = function(currentLeft, currentRight, inputNum, hand){
         currentRight: ''
       };
     
-    left = Math.abs(inputNum-currentLeft);
-    right = Math.abs(inputNum-currentRight);
+    let inputDisX = 0;
+    let inputDisY = 0;
+    let leftDisX = 0;
+    let leftDisY = 0;
+    let rightDisX = 0;
+    let rightDisY = 0;
+    let leftDiffDis = 0;
+    let rightDiffDis = 0;
 
-    
-    if(currentLeft=='*' && currentRight=='#'){
+    inputDisX = position[inputNum][0];
+    inputDisY = position[inputNum][1];
+
+    leftDisX = position[currentLeft][0];
+    leftDisY = position[currentLeft][1];
+
+    rightDisX = position[currentRight][0];
+    rightDisY = position[currentRight][1];
+
+    leftDiffDis = Math.abs((inputDisX-leftDisX))+Math.abs((inputDisY-leftDisY));
+    rightDiffDis = Math.abs((inputDisX-rightDisX))+Math.abs((inputDisY-rightDisY));
+
+    console.log('inputDisX : ', inputDisX, ' inputDisY : ', inputDisY, ' leftDisX : ', leftDisX, ' leftDisY : ', leftDisY, ' rightDisX : ', rightDisX, ' rightDisY : ', rightDisY);
+    console.log('leftDiffDis : ', leftDiffDis, ' rightDiffDis : ', rightDiffDis);
+
+    if(leftDiffDis == rightDiffDis){
+
         if(hand == 'left'){
-
-            value = "L";
+            value = 'L';
             currentLeft = inputNum;
-
-            data = {
-                answer: value,
-                currentLeft: currentLeft,
-                currentRight: currentRight
-              };
-
-            return data;
-        } 
-        else{
-
-            value = "R";
-            currentRight = inputNum;
-
-            data = {
-                answer: value,
-                currentLeft: currentLeft,
-                currentRight: currentRight
-              };
-
-            return data;
-        } 
-    }
-
-    // console.log('currentLeft : ', currentLeft, 'currentRight : ', currentRight, 'inputNum : ', inputNum);
-
-    if(inputNum == 0){
-        
-        // inputNum 0 은 예외, else 랑 반대
-        
-        if(left<right){
-            value = "R";
-            currentRight = inputNum;
-        } 
-        else{
-            value = "L";
-            currentLeft = inputNum;
-        } 
-        
-    }else{
-        
-        if(left<right){
-            value = "L";
-            currentLeft = inputNum;
-        } 
-        else{
-            value = "R";
+        }else{
+            value = 'R';
             currentRight = inputNum;
         }
     }
+    else if( leftDiffDis < rightDiffDis ){
+        value = 'L';
+        currentLeft = inputNum;
+    }else if(leftDiffDis > rightDiffDis){
+        value = 'R';
+        currentRight = inputNum;
+    }
+
+    // console.log('currentLeft : ', currentLeft, 'currentRight : ', currentRight, 'inputNum : ', inputNum);
+    // const sum = num10.reduce((a,b) => (a+b));
     
+
     data = {
         answer: value,
         currentLeft: currentLeft,
@@ -171,4 +168,4 @@ console.log(result);
 // node keypad.js
 // 13458214595
 // LRLLLRLLRRL
-// LRLLLRLLLRL
+// LRLLLRLLRRL
