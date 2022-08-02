@@ -1,0 +1,148 @@
+/*
+
+## 크레인 인형 뽑기 게임 ## 
+https://school.programmers.co.kr/learn/courses/30/lessons/64061
+
+*/
+
+
+import Foundation
+
+func solution(_ board:[[Int]], _ moves:[Int]) -> Int {
+var result = [Int]()
+    var copyBoard = board
+    var count = 0
+
+    for index in moves {
+        for (inIndex, element) in copyBoard.enumerated() {
+            if element[index - 1] != 0 {
+                result.append(element[index - 1])
+                copyBoard[inIndex][index - 1] = 0
+                break
+            }
+        }
+
+        if result.count >= 2 && result[result.count - 1] == result[result.count - 2] {
+            result.popLast()
+            result.popLast()
+            count += 2
+        }
+    }
+    return count
+    
+}
+/*
+var nothing: Int = 0
+var currentBoard: [[Int]] = [[]]
+var basket: [Int] = []
+
+func solution(_ board:[[Int]], _ moves:[Int]) -> Int {
+    
+    currentBoard = board
+    
+    var popped: Int = 0
+    
+    // 인형을 뽑아서 바구니에 넣는다
+    moves.forEach { 
+        basket.append(pick($0))
+        
+        // 0 제거
+        basket.removeAll { $0 == nothing }
+    
+        // 끝에 0 추가
+        basket.append(0)
+        
+        var tempPopped: Int = 0
+        repeat {
+            tempPopped = pop()
+            popped += tempPopped
+        } while tempPopped > 0
+    }
+    
+    // 0 제거
+    // basket.removeAll { $0 == nothing }
+    
+    // 끝에 0 추가
+    // basket.append(0)
+    
+    // 사라진 인형 개수를 구한다
+    /*
+    var popped: Int = 0
+    var tempPopped: Int = 0
+    repeat {
+        tempPopped = pop()
+        popped += tempPopped
+    } while tempPopped > 0
+    */
+    
+    
+    return popped
+    
+}
+
+// 주어진 인덱스의 인형을 뽑는다
+func pick(_ move: Int) -> Int {
+    // 1~5의 크레인 숫자를 0~4의 인덱스로 변경
+    let moveIndex = move - 1
+    
+    // 0이아닌 숫자(인형)을 뽑기위해 윗층의 배열부터 순환하며 확인
+    var toy: Int = nothing
+    for (index, toysInHorizontal) in currentBoard.enumerated() {
+        if toysInHorizontal[moveIndex] == nothing { continue }
+        else {
+            // 숫자(인형)을 toy에 할당하고 기존의 board에는 0을 할당
+            toy = toysInHorizontal[moveIndex]
+            currentBoard[index][moveIndex] = nothing
+            break
+        }
+    }
+    
+    return toy
+}
+
+// 바구니안의 연달아 있는 인형을 제거하고 제거한 개수를 반환한다
+// (연달아 있는 인형들중 첫번째 것만 제거함)
+func pop() -> Int {
+    if basket.count < 2 { return 0 }
+    
+    // print("basket: \(basket)")
+    var currentToy: Int = nothing    // 현재 인형 
+    var firstIndex: Int = -1
+    var lastIndex: Int = -1
+    
+    for (index, toy) in basket.enumerated() {
+        
+        // currentToy가 현재 인형과 같으면 인덱스를 설정함
+        if currentToy == toy { 
+            if firstIndex < 0 { firstIndex = index - 1 } 
+            lastIndex = index
+        }
+        // currentToy가 현재 인형과 같지 않고 설정된 인덱스가 있으면 제거될 인형 개수를 반환
+        else if lastIndex > 0 && firstIndex > 0 {
+            basket.removeSubrange(firstIndex ... lastIndex)
+            return lastIndex - firstIndex + 1
+        }
+        
+        // currentToy 갱신
+        currentToy = toy
+    }
+
+    return 0
+}
+    */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
