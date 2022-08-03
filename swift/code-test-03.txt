@@ -1,0 +1,78 @@
+/*
+
+## 시저 암호 ##
+https://school.programmers.co.kr/learn/courses/30/lessons/12926
+
+*/
+
+
+let uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let lowers = uppers.lowercased()
+var nothing: Int = -1
+
+
+func solution(_ s:String, _ n:Int) -> String {
+    
+    var str: String = ""
+    for i in s {
+        let pushedChar = getPushedChar(char: i, push: n)
+        str.append(pushedChar)
+    }
+    
+    // print("question: \(s)")
+    // print("answer: \(str)")
+    
+    return str
+}
+
+
+func getPushedChar(char: Character, push: Int) -> String {
+    if char == " " { return " " }
+
+    func getChar(in alphabets: String) -> String {
+        var targetIndex: Int = nothing
+        for (index, alphabet) in alphabets.enumerated() {
+            if alphabet == char { 
+                targetIndex = index + push 
+
+                if targetIndex >= alphabets.count {
+                    targetIndex = targetIndex - alphabets.count
+                }
+            }
+
+            if targetIndex != nothing { return String(alphabets[targetIndex]) }
+        }
+        
+        return ""
+    }
+    
+    var lowerChar = getChar(in: lowers)
+    var upperChar = getChar(in: uppers)
+    
+    return lowerChar.isEmpty ? upperChar : lowerChar
+}
+
+extension String {
+    subscript(idx: Int) -> String {
+        guard (0 ..< count).contains(idx) else {
+            return ""
+        }
+        let target = index(startIndex, offsetBy: idx)
+        return String(self[target])
+    }
+}
+
+
+/*
+
+## 모범 답안 ##
+func solution(_ s:String, _ n:Int) -> String {
+    let alphabets = "abcdefghijklmnopqrstuvwxyz".map { $0 }
+    return String(s.map {
+        guard let index = alphabets.firstIndex(of: Character($0.lowercased())) else { return $0 }
+        let letter = alphabets[(index + n) % alphabets.count]
+        return $0.isUppercase ? Character(letter.uppercased()) : letter
+    })
+}
+
+*/
