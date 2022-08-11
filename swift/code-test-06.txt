@@ -1,0 +1,23 @@
+/*
+
+## 예산 ##
+https://school.programmers.co.kr/learn/courses/30/lessons/12982
+
+*/
+
+import Foundation
+
+func solution(_ d:[Int], _ budget:Int) -> Int {
+    
+    let demands = d.sorted()
+    var sum: Int = 0
+    var count: Int = 0
+    for (i, demand) in demands.enumerated() {
+        sum += demand
+        count += 1
+        
+        if sum > budget { count -= 1 }
+    }
+    
+    return count
+}
