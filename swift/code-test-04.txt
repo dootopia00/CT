@@ -1,0 +1,29 @@
+/*
+
+## 점프와 순간 이동 ##
+https://school.programmers.co.kr/learn/courses/30/lessons/12980
+
+*/
+
+
+
+import Foundation
+
+func solution(_ n: Int) -> Int 
+{
+    var ans:Int = 0
+    
+    var q: Int = n  // 2로 나눈 몫
+    var r: Int = 0  // 2로 나눈 나머지
+    while q > 1 {
+        r = q % 2
+        q = q / 2
+        // print("q: \(q) / r: \(r)\n")
+        if r == 1 { ans += 1 }
+    }
+    
+    ans += 1
+
+    // print("answer: \(ans)")
+    return ans
+}

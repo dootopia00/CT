@@ -1,0 +1,121 @@
+/*
+
+## 삼각 달팽이 ##
+https://school.programmers.co.kr/learn/courses/30/lessons/68645
+
+*/
+
+
+
+import Foundation
+
+enum Direction {
+    case down 
+    case up
+    case right
+    case none
+}
+
+func solution(_ n:Int) -> [Int] {
+    
+    var arr = [[Int]](repeating: [], count: n)
+    var total: Int = 0 
+    var direction = Direction.down
+    
+    for i in 0 ..< n {
+        for _ in 0 ..< i + 1 {
+            arr[i].append(0)
+            total += 1
+        }           
+    }
+    
+    var loopCount: Int = n
+    var num: Int = 0
+    var downFloor: Int = 0
+    var downIndex: Int = 0
+    var rightIndex: Int = n - 1
+    var rightGap: Int = 1
+    
+    for _ in 0 ..< n {
+        // print("\nloopCount: \(loopCount)")
+        // print("direction: \(direction)")
+        
+        for j in 0 ..< loopCount {
+            num += 1
+            
+            if direction == .down {
+                if arr[j + downFloor][downIndex] == 0 {
+                    arr[j + downFloor][downIndex] = num    
+                }
+                
+                // print("loopCount - 1: \(loopCount - 1)")
+                // print("j: \(j)")
+                if j == loopCount - 1 {
+                    downIndex += 1
+                    downFloor += 2
+                    direction = .right
+                    // print("change to right!")  
+                    break
+                } 
+            }
+            else if direction == .right {                
+                let index = (downIndex + j)
+                arr[rightIndex][index] = num
+
+                if j == loopCount - 1 {
+                    rightIndex -= 1
+                    direction = .up
+                    // print("change to up!")  
+                }
+            } 
+            else if direction == .up {
+                let index = arr[rightIndex - j].count - rightGap
+                // print("floor: \(rightIndex - j) / index: \(index) / num: \(num)")
+
+                arr[rightIndex - j][index] = num
+                
+                if j == loopCount - 1 {
+                    direction = .down
+                    rightGap += 1
+                    // print("change to down!")  
+                    break   
+                }
+            }
+
+            
+        }
+        
+        
+        loopCount -= 1
+    }
+    
+    
+    // print("arr: \(arr)")
+    
+    var answer: [Int] = []
+    for secondArr in arr {
+        for val in secondArr {
+            answer.append(val)
+        }
+    }
+    // print("answer: \(answer)")
+    
+    return answer
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

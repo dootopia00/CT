@@ -1,0 +1,55 @@
+/*
+
+## 체육복
+
+*/
+
+
+import Foundation
+
+func solution(_ n:Int, _ lost:[Int], _ reserve:[Int]) -> Int {
+    
+    var tempReserve: [Int] = reserve 
+    var tempLost: [Int] = lost
+    
+    for i in reserve {
+        // 여벌의 체육복을 도난 당했으면 도난 당한 학생 목록에서 제외 
+        if let index = tempLost.firstIndex(of: i) {
+            tempLost.remove(at: index)
+            
+            // 여벌의 체육복을 도난 당했으면 여벌이 있는 학생 목록에저 제외
+            if let index = tempReserve.firstIndex(of: i) {
+                tempReserve.remove(at: index)
+            }
+        }
+    }
+    
+    tempReserve.sort()
+    
+    // 체육복을 빌린 학생을 도난 당한 학생 목록에서 제외 
+    for i in tempReserve {
+        
+        if let index = tempLost.firstIndex(of: i - 1) {
+            tempLost.remove(at: index)
+        } 
+        else if let index = tempLost.firstIndex(of: i + 1) {
+            tempLost.remove(at: index)
+        }
+    }
+    
+    return n - tempLost.count
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
