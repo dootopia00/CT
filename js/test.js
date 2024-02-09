@@ -13,6 +13,6 @@ rl.on('line', function (line) {
     
     let a = Number(input[0]);
     let b = Number(input[1]);
-    console.log("a = " + a);
+    console.log("a = " + a);    
     console.log("b = " + b);
 });
