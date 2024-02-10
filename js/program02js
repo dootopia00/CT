@@ -1,0 +1,22 @@
+function solution(s, skip, index) {
+    var answer = '';
+    
+    // "aukks"	"wbqd"	5	"happy"
+    let strArr=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+    console.log('strArr : ', strArr.length)
+    let sArr=[...s];
+    let skipArr=[...skip];
+    
+    if(typeof(s) !== 'string') return;
+    if(typeof(skip) !== 'string') return;
+    if(!(index >= 1 && index <= 20)) return;
+    
+    strArr = strArr.filter(element => !skipArr.includes(element));
+    
+    sArr.map(function(ele){
+       
+          console.log('ele : ', ele)
+    });
+
+    return answer;
+}
