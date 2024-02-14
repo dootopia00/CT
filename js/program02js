@@ -43,7 +43,7 @@ function solution(s, skip, index) {
         let eleIndex = strArr.indexOf(ele);
         let changeIndex;
         if(eleIndex+index > strArr.length-1){
-            changeIndex=strArr[(eleIndex+index)%strArr.length];
+            changeIndex=strArr[(eleIndex+index)%strArr.length];     
         }else{
             changeIndex=strArr[eleIndex+index];
         }
